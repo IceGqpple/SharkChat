@@ -42,6 +42,7 @@
             this.textMessage = new System.Windows.Forms.TextBox();
             this.listMessage = new System.Windows.Forms.ListBox();
             this.buttonSend = new System.Windows.Forms.Button();
+            this.ListenServer = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -73,6 +74,7 @@
             this.textLocalIP.Name = "textLocalIP";
             this.textLocalIP.Size = new System.Drawing.Size(100, 23);
             this.textLocalIP.TabIndex = 2;
+            this.textLocalIP.TextChanged += new System.EventHandler(this.textLocalIP_TextChanged);
             // 
             // label2
             // 
@@ -174,11 +176,22 @@
             this.buttonSend.UseVisualStyleBackColor = true;
             this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
             // 
+            // ListenServer
+            // 
+            this.ListenServer.Location = new System.Drawing.Point(699, 154);
+            this.ListenServer.Name = "ListenServer";
+            this.ListenServer.Size = new System.Drawing.Size(97, 40);
+            this.ListenServer.TabIndex = 6;
+            this.ListenServer.Text = "ListenServer";
+            this.ListenServer.UseVisualStyleBackColor = true;
+            this.ListenServer.Click += new System.EventHandler(this.ListenServer_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(902, 739);
+            this.Controls.Add(this.ListenServer);
             this.Controls.Add(this.buttonSend);
             this.Controls.Add(this.listMessage);
             this.Controls.Add(this.textMessage);
@@ -213,5 +226,6 @@
         private TextBox textMessage;
         private ListBox listMessage;
         private Button buttonSend;
+        private Button ListenServer;
     }
 }

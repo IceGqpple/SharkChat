@@ -7,8 +7,9 @@ namespace SharkChat
 {
     public partial class Form1 : Form
     {
-        Socket sck;
+        //Socket sck;
         EndPoint epLocal, epRemote;
+        Socket sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         byte[] buffer;
         public Form1()
         {
@@ -27,18 +28,21 @@ namespace SharkChat
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //Socket sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-
+            ////sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            //IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Parse(textLocalIP.Text), int.Parse(textLocalPort.Text));
+            //sck.Bind(localEndPoint);//server ip
+            //sck.Listen();
             textLocalIP.Text = GetLocalIP();
             textRemoteIP.Text = GetLocalIP();
         }
 
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            epLocal = new IPEndPoint(IPAddress.Parse(textLocalIP.Text), Convert.ToInt32(textLocalPort.Text));
-            sck.Bind(epLocal);
+            sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //epLocal = new IPEndPoint(IPAddress.Parse(textLocalIP.Text), Convert.ToInt32(textLocalPort.Text));
+            //sck.Bind(epLocal);
 
             epRemote = new IPEndPoint(IPAddress.Parse(textRemoteIP.Text), Convert.ToInt32(textRemotePort.Text));
             sck.Connect(epRemote);
@@ -49,7 +53,8 @@ namespace SharkChat
 
         private void buttonSend_Click(object sender, EventArgs e)
         {
-             ASCIIEncoding aEncoding = new ASCIIEncoding();
+            //sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            ASCIIEncoding aEncoding = new ASCIIEncoding();
             byte[] sendingMessage = new byte[1024];
             sendingMessage = aEncoding.GetBytes(textMessage.Text);
 
@@ -71,10 +76,26 @@ namespace SharkChat
             return "127.0.0.1";
         }
 
+        private void textLocalIP_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ListenServer_Click(object sender, EventArgs e)
+        {
+            Socket sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+            //sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Parse(textLocalIP.Text), int.Parse(textLocalPort.Text));
+            sck.Bind(localEndPoint);//server ip
+            sck.Listen(10);
+        }
+
         private void MessageCallBack(IAsyncResult aResult)
         {
             try
             {
+                //Socket sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 byte[] receivedData = new byte[1024];
                 receivedData = (byte[])aResult.AsyncState;
 
